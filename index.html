@@ -20,7 +20,7 @@ body { font-family: Arial, Sans serif; font-size:12px;}
 
 <div>The tweet above inspired me to write a quick script to add the word 'bloody' wherever possible. (I use <a href="https://code.google.com/p/jspos/" target="_blank">jspos</a> to find nouns)</div>
 
-<button onclick="convert();">Click here to convert the bloody text!</button>
+<button>Click here to convert the bloody text!</button>
 <br/>
 
 <textarea rows="25" cols="50" id="input_text" style="float:left">
@@ -64,12 +64,14 @@ function convert() {
           var taggedWord = taggedWords[i];
           var word = taggedWord[0];
           var tag = taggedWord[1];
-          result += (tag=="NN" && word.indexOf("<")<0 && word.length>1 ? (w++==0 ? " Bloody " :" bloody ") : " ") + word;
+          result += (tag=="NN" && word.indexOf("<")<0 && word.length>1 ? (w==0 ? " Bloody " :" bloody ") : " ") + word;
+          w++
         }
         result+= '\n'
     }
     document.getElementById("tagged_text").innerHTML = result;
 }
+convert();
 </script>
 
 </body>
