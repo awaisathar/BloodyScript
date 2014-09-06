@@ -64,7 +64,7 @@ function convert() {
           var taggedWord = taggedWords[i];
           var word = taggedWord[0];
           var tag = taggedWord[1];
-          result += ((tag.indexOf("NN")==0 ||  tag.indexOf("V")==0) && word!="be" && word!="is" && word.indexOf("<")<0 && word.length>1 ? (w==0 ? " Bloody " :" bloody ") : " ") + word;
+          result += ( (tag.indexOf("NN")==0 ||  tag.indexOf("V")==0) && Math.random()>0.5 && word!="be" && word!="is" && word.indexOf("<")<0 && word.length>1 ? (w==0 ? " Bloody " :" bloody ") : " ") + word;
           w++
         }
         result+= '\n'
