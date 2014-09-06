@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<style>
+body { font-family: Arial, Sans serif; font-size:12px;}
+</style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Bloody Page!</title>
+</head>
+
+<body onload="convert();">
+
+<script type="text/javascript" src="lexer.js"></script>
+<script type="text/javascript" src="lexicon.js_"></script>
+<script type="text/javascript" src="POSTagger.js"></script>
+
+<blockquote class="twitter-tweet" data-conversation="none" lang="en"><p><a href="https://twitter.com/firuzap">@firuzap</a> love Frost, in spite of the bloody paths poem</p>&mdash; Alex H Swift (@lahorigori) <a href="https://twitter.com/lahorigori/status/508335904293801984">September 6, 2014</a></blockquote>
+<script async src="//platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+<div>The tweet above inspired me to write a quick script to add the word 'bloody' wherever possible. (I use <a href="https://code.google.com/p/jspos/" target="_blank">jspos</a> to find nouns)</div>
+
+<button onclick="convert();">Click here to convert the bloody text!</button>
+<br/>
+
+<textarea rows="25" cols="50" id="input_text" style="float:left">
+ 
+Two roads diverged in a yellow wood,
+And sorry I could not travel both
+And be one traveler, long I stood
+And looked down one as far as I could
+To where it bent in the undergrowth;  
+
+Then took the other, as just as fair,
+And having perhaps the better claim,
+Because it was grassy and wanted wear;
+Though as for that the passing there
+Had worn them really about the same,  
+
+And both that morning equally lay
+In leaves no step had trodden black.
+Oh, I kept the first for another day!
+Yet knowing how way leads on to way,
+I doubted if I should ever come back.  
+
+I shall be telling this with a sigh
+Somewhere ages and ages hence:
+Two roads diverged in a wood, and I—
+I took the one less traveled by,
+And that has made all the difference.
+</textarea>
+
+<pre id="tagged_text"  style="float:left; border: 1px solid lightgray;"></pre>
+
+<script type="text/javascript">
+function convert() {
+    var text = document.getElementById("input_text").value.split("\n")
+    var result = "";
+    for (var c=0; c<text.length; c++ )  {
+        var words = new Lexer().lex(text[c]);
+        var taggedWords = new POSTagger().tag(words);
+        var w = 0;
+        for (i in taggedWords) {
+          var taggedWord = taggedWords[i];
+          var word = taggedWord[0];
+          var tag = taggedWord[1];
+          result += (tag=="NN" && word.indexOf("<")<0 && word.length>1 ? (w++==0 ? " Bloody " :" bloody ") : " ") + word;
+        }
+        result+= '\n'
+    }
+    document.getElementById("tagged_text").innerHTML = result;
+}
+</script>
+
+</body>
+</html>
